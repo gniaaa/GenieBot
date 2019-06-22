@@ -1,6 +1,6 @@
 const hasProfanity = (string) => {
   const regex = /(f+u*ck+|bi+a*tch+|du+mb+|cu+nt+|pu+ss+y+)/i;
-  return !regex.test(string);
+  return regex.test(string);
 }
 
 const isGreeting = (string) => {

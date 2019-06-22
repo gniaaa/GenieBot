@@ -4,9 +4,18 @@ const msgDisplay = (creator) => {
   return creator === 'geniebot' ? 'geniebot' : 'chatuser';
 }
 
+const wrapperDisp = (creator) => {
+  return creator === 'geniebot' ? 'bot-wrapper' : 'user-wrapper';
+}
+// message structure
+// id, index, creator, response
+
+
 const Message = ({ message }) => (
-  <div className={msgDisplay(message.creator)}>
-    {message.message}
+  <div className={`chat-message ${wrapperDisp(message.creator)}`}>
+    <div className={msgDisplay(message.creator)}>
+      {message.message}
+    </div>
   </div>
 )
 

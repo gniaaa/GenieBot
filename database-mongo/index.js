@@ -19,26 +19,34 @@ var messageSchema = mongoose.Schema({
 });
 
 var profanitySchema = mongoose.Schema({
-  rnd: Number,
-  response: String,
+  index: Number,
+  message: String,
 });
 
 var greetingSchema = mongoose.Schema({
-  rnd: Number,
-  response: String,
+  index: Number,
+  message: String,
+});
+
+var goodbyeSchema = mongoose.Schema({
+  index: Number,
+  message: String,
 });
 
 messageSchema.index({ username: 1 });
-profanitySchema.index({ rnd: 1 });
-greetingSchema.index({ rnd: 1 });
+profanitySchema.index({ index: 1 });
+greetingSchema.index({ index: 1 });
+goodbyeSchema.index({ index: 1 });
 
 var Message = mongoose.model('Message', messageSchema);
 var Profanity = mongoose.model('Profanity', profanitySchema);
 var Greeting = mongoose.model('Greeting', greetingSchema);
+var Goodbye = mongoose.model('Goodbye', greetingSchema);
 
 module.exports = {
   db,
   Message,
   Profanity,
   Greeting,
-}
+  Goodbye,
+};

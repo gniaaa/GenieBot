@@ -1,8 +1,8 @@
-const { Profanity, Greeting } = require('../../database-mongo/index.js');
+const { Profanity, Greeting, Goodbye } = require('../../database-mongo/index.js');
 
 const answerProfanity = () => {
   return new Promise((resolve, reject) => {
-    Profanity.find({}).where('rnd').gte(Math.random()).limit(1).exec((err, result) => {
+    Profanity.find({ index: Math.floor(Math.random() * 10) }, (err, result) => {
       if (err) reject(err);
       else resolve(result);
     })
@@ -11,7 +11,16 @@ const answerProfanity = () => {
 
 const answerGreeting = () => {
   return new Promise((resolve, reject) => {
-    Greeting.find({}).where('rnd').gte(Math.random()).limit(1).exec((err, result) => {
+    Greeting.find({ index: Math.floor(Math.random() * 10) }, (err, result) => {
+      if (err) reject(err);
+      else resolve(result);
+    })
+  })
+}
+
+const answerGoodbye = () => {
+  return new Promise((resolve, reject) => {
+    Goodbye.find({ index: Math.floor(Math.random() * 10) }, (err, result) => {
       if (err) reject(err);
       else resolve(result);
     })
@@ -21,4 +30,5 @@ const answerGreeting = () => {
 module.exports = {
   answerProfanity,
   answerGreeting,
+  answerGoodbye
 }
