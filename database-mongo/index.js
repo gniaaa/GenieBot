@@ -33,15 +33,22 @@ var goodbyeSchema = mongoose.Schema({
   message: String,
 });
 
+var confusedSchema = mongoose.Schema({
+  index: Number,
+  message: String,
+});
+
 messageSchema.index({ username: 1 });
 profanitySchema.index({ index: 1 });
 greetingSchema.index({ index: 1 });
 goodbyeSchema.index({ index: 1 });
+confusedSchema.index({ index: 1 });
 
 var Message = mongoose.model('Message', messageSchema);
 var Profanity = mongoose.model('Profanity', profanitySchema);
 var Greeting = mongoose.model('Greeting', greetingSchema);
-var Goodbye = mongoose.model('Goodbye', greetingSchema);
+var Goodbye = mongoose.model('Goodbye', goodbyeSchema);
+var Confused = mongoose.model('Confused', confusedSchema);
 
 module.exports = {
   db,
@@ -49,4 +56,5 @@ module.exports = {
   Profanity,
   Greeting,
   Goodbye,
+  Confused,
 };

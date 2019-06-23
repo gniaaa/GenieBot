@@ -21,6 +21,7 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.updateMessages = this.updateMessages.bind(this);
+    this.clearInput = this.clearInput.bind(this);
   }
 
   componentDidMount() {
@@ -48,7 +49,7 @@ class App extends React.Component {
       .then(data => data.json())
       .then((messages) => this.setState({
         messages,
-        newUser: true,
+        newUser: false,
       }))
       .catch((error) => {
         console.log('error', error);
@@ -77,10 +78,15 @@ class App extends React.Component {
     });
   }
 
+  clearInput() {
+    this.setState({ input: '' });
+  }
+
   handleClick(e) {
     e.preventDefault();
     let msg = this.createMessage();
     this.updateMessages(msg);
+    this.clearInput();
 
     fetch('/messages', {
       method: 'POST',
@@ -98,7 +104,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { messages, username, newUser } = this.state;
+    const { messages, username, newUser, input } = this.state;
     const capitalized = username[0].toUpperCase() + username.substring(1).toLowerCase();
     return (
       <div className="body-wrapper">
@@ -106,7 +112,7 @@ class App extends React.Component {
         {newUser && <h3>What would you like to talk about today?</h3>}
         {!newUser && <h3>Welcome back! Here is where you left off the last time</h3>}
         <Chats messages={messages} />
-        <ChatInput handleChange={this.handleChange} handleClick={this.handleClick} />
+        <ChatInput input={input} handleChange={this.handleChange} handleClick={this.handleClick} />
       </div>
     )
   }

@@ -4,7 +4,7 @@ const bot = require('./bot.js');
 
 const getUserMessages = (req, res) => {
   const username = req.params.name;
-  Message.find({ username }).sort({ date: 1 }).limit(10).exec((err, body) => {
+  Message.find({ username }).sort({ date: 1 }).limit(15).exec((err, body) => {
     if (err) {
       res.send(404);
     } else {
@@ -13,18 +13,12 @@ const getUserMessages = (req, res) => {
   })
 }
 
-// create Message is a promise that saves both user and bot responses
 const createUserMessage = (message, creator) => {
   message.creator = creator;
   message.createdAt = Date.now();
-  return new Promise((resolve, reject) => {
-    Message.create(message, (err, result) => {
-      if (err) reject(err);
-      else {
-        resolve(result);
-      }
-    })
-  });
+  Message.create(message, (err) => {
+    if (err) console.log(err);
+  })
 }
 
 const createBotMessage = (res, username) => {
@@ -34,14 +28,9 @@ const createBotMessage = (res, username) => {
     createdAt: Date.now(),
     username,
   }
-  return new Promise((resolve, reject) => {
-    Message.create(message, (err, result) => {
-      if (err) reject(err);
-      else {
-        resolve(result);
-      }
-    })
-  });
+  Message.create(message, (err) => {
+    if (err) console.log(err);
+  })
 }
 
 const parseMessage = (req, res) => {
@@ -76,7 +65,12 @@ const parseMessage = (req, res) => {
       })
       .catch(() => res.send(500))
   } else {
-
+    bot.answerConfused()
+      .then((response) => {
+        createBotMessage(response[0].message, req.body.username);
+        res.send(response);
+      })
+      .catch(() => res.send(500))
   }
 };
 
