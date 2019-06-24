@@ -4,7 +4,7 @@ const bot = require('./bot.js');
 
 const getUserMessages = (req, res) => {
   const username = req.params.name;
-  Message.find({ username }).sort({ date: 1 }).limit(15).exec((err, body) => {
+  Message.find({ username }).sort({ createdAt: -1 }).limit(15).exec((err, body) => {
     if (err) {
       res.send(404);
     } else {
@@ -64,7 +64,18 @@ const parseMessage = (req, res) => {
         res.send(response);
       })
       .catch(() => res.send(500))
+  } else if (parse.isWeatherQuery(message)) {
+
+    // if is weather
+    bot.answerWeather()
+      .then(response => {
+        createBotMessage(response, req.body.username);
+        res.send([{ message: response }]);
+      })
+      .catch(() => res.send(500))
+
   } else {
+
     bot.answerConfused()
       .then((response) => {
         createBotMessage(response[0].message, req.body.username);

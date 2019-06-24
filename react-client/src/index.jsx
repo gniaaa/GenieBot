@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: sampleData,
+      messages: [],
       username: 'gorgeous',
       newUser: true,
       input: '',
@@ -16,10 +16,12 @@ class App extends React.Component {
 
     this.getName = this.getName.bind(this);
     this.initializeUser = this.initializeUser.bind(this);
+    this.updateScroll = this.updateScroll.bind(this);
     this.fetchLatestMessages = this.fetchLatestMessages.bind(this);
     this.createMessage = this.createMessage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.updateMessages = this.updateMessages.bind(this);
     this.clearInput = this.clearInput.bind(this);
   }
@@ -44,13 +46,23 @@ class App extends React.Component {
     }
   }
 
+  updateScroll() {
+    let element = document.getElementsByClassName('all-chats')[0];
+    element.scrollTop = element.scrollHeight;
+  }
+
   fetchLatestMessages(username) {
     fetch(`/messages/${username}`)
       .then(data => data.json())
-      .then((messages) => this.setState({
-        messages,
-        newUser: false,
-      }))
+      .then((messages) => {
+        if (messages.length > 0) {
+          this.setState({
+            messages,
+            newUser: false,
+          })
+        }
+        this.updateScroll();
+      })
       .catch((error) => {
         console.log('error', error);
         this.setState({ newUser: true })
@@ -97,10 +109,18 @@ class App extends React.Component {
     })
       .then((response) => response.json())
       .then((response) => {
+        console.log('response from bot is', response);
         response[0].creator = 'geniebot';
         this.updateMessages(response[0]);
+        this.updateScroll();
       })
       .catch(err => console.log('error', err));
+  }
+
+  handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.handleClick(e);
+    }
   }
 
   render() {
@@ -112,7 +132,7 @@ class App extends React.Component {
         {newUser && <h3>What would you like to talk about today?</h3>}
         {!newUser && <h3>Welcome back! Here is where you left off the last time</h3>}
         <Chats messages={messages} />
-        <ChatInput input={input} handleChange={this.handleChange} handleClick={this.handleClick} />
+        <ChatInput input={input} handleChange={this.handleChange} handleClick={this.handleClick} handleKeyPress={this.handleKeyPress} />
       </div>
     )
   }

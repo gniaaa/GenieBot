@@ -1,5 +1,5 @@
 const hasProfanity = (string) => {
-  const regex = /(f+u*ck+|bi+a*tch+|du+mb+|cu+nt+|pu+ss+y+)/i;
+  const regex = /(f+u*ck+|bi+a*tch+|du+mb+|cu+nt+|pu+ss+y+|da+m+n+)/i;
   return regex.test(string);
 }
 
@@ -13,8 +13,14 @@ const isGoodbye = (string) => {
   return regex.test(string);
 }
 
+const isWeatherQuery = (string) => {
+  const regex = /\b(what is the weather|wh*at\'*s* [the ]*weather|tell [me the ]*weather)\b/i;
+  return regex.test(string);
+}
+
 module.exports = {
   hasProfanity,
   isGreeting,
   isGoodbye,
+  isWeatherQuery,
 }
