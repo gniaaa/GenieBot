@@ -1,5 +1,5 @@
 const hasProfanity = (string) => {
-  const regex = /(f+u*ck+|bi+a*tch+|du+mb+|cu+nt+|pu+ss+y+|da+m+n+)/i;
+  const regex = /(f+u*ck+|bi+a*tch+|du+mb+|cu+nt+|pu+ss+y+|da+m+n+|ni+gga+|ni+gger+)/i;
   return regex.test(string);
 }
 

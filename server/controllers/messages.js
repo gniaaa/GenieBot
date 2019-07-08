@@ -8,7 +8,7 @@ const getUserMessages = (req, res) => {
     if (err) {
       res.send(404);
     } else {
-      res.send(body);
+      res.send(body.sort((a, b) => a.createdAt - b.createdAt));
     }
   })
 }
@@ -45,7 +45,7 @@ const parseMessage = (req, res) => {
         createBotMessage(response[0].message, req.body.username);
         res.send(response);
       })
-      .catch(() => res.send(500))
+      .catch(() => res.sendStatus(500))
   } else if (parse.isGreeting(message)) {
 
     // if is greeting
@@ -54,7 +54,7 @@ const parseMessage = (req, res) => {
         createBotMessage(response[0].message, req.body.username);
         res.send(response);
       })
-      .catch(() => res.send(500))
+      .catch(() => res.sendStatus(500))
   } else if (parse.isGoodbye(message)) {
 
     // if is goodbye
@@ -72,7 +72,7 @@ const parseMessage = (req, res) => {
         createBotMessage(response, req.body.username);
         res.send([{ message: response }]);
       })
-      .catch(() => res.send(500))
+      .catch(() => res.sendStatus(500))
 
   } else {
 
@@ -81,7 +81,7 @@ const parseMessage = (req, res) => {
         createBotMessage(response[0].message, req.body.username);
         res.send(response);
       })
-      .catch(() => res.send(500))
+      .catch(() => res.sendStatus(500))
   }
 };
 

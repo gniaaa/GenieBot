@@ -10,8 +10,6 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../react-client/dist'));
 
 app.get('/messages/:name', messages.getUserMessages);
-// when receiving a msg, send back itself and the response, save manually;
-
 app.post('/messages', messages.parseMessage);
 
 app.listen(3000, function () {
