@@ -4,6 +4,7 @@
 
 <br />
 <p align='center'>
+    <img src="geniebot.gif?raw=true" align="center" height="400px"/>
 </p> 
 
 ## Table of Contents
