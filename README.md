@@ -1,7 +1,6 @@
 # Genie Bot
 
 > A cute, quirky and responsive chat bot to talk to when you are bored
-> Named after her owner's childhood nickname 
 
 <br />
 <p align='center'>
