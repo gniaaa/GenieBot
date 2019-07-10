@@ -7,10 +7,13 @@
     <img src="geniebot.gif?raw=true" align="center" height="400px"/>
 </p> 
 
-## Table of Contents
+## Stack
 
-1. [How To Use](#how-to-use)
-2. [Requirements](#requirements)
+Front-end: JavaScript, React
+<br />
+Back-end: Node.js, Express, Accuweather API
+<br />
+Database: MongoDB
 
 ## How To Use
 
@@ -23,7 +26,12 @@ $ npm install
 
 # compile/transpile files with webpack
 $ npm run build
+```
 
+* Get Accuweather API Key from https://developer.accuweather.com
+* Copy over API Key to accuweather.config.js 
+
+```bash
 # run the app!
 $ npm run start
 ```
