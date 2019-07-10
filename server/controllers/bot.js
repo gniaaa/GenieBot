@@ -1,5 +1,4 @@
 const { Profanity, Greeting, Goodbye, Confused } = require('../../database-mongo/index.js');
-const { OPENW_API_KEY } = require('../../openweather.config');
 const { ACCU_API_KEY } = require('../../accuweather.config');
 const request = require('request');
 
